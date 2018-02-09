@@ -28,13 +28,19 @@ public class ApplicationController {
             user = new User();
             user.setId(id);
             user.setPassword(password);
+            db.save(user);
+        } else if (!user.getPassword().equals(password)) {
+            return null;
         }
         return user;
     }
 
     @PostMapping("/saveUser")
     public boolean getUser(@RequestBody User user) {
-        db.save(user);
-        return true;
+        if (db.findOne(new Query(Criteria.where("id").is(user.getId()).and("password").is(user.getPassword())), User.class) != null) {
+            db.save(user);
+            return true;
+        }
+        return false;
     }
 }
