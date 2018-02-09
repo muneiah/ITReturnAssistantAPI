@@ -7,10 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,12 @@ public class ApplicationController {
 
     @GetMapping("/admin/getUser/{id}")
     public User getUser(@RequestParam(value="id") String id, @RequestBody String password) {
-        return db.findOne(new Query(Criteria.where("id").is(id)), User.class);
+        return db.findOne(new Query(Criteria.where("id").is(id).and("password").is(password)), User.class);
     }
 
+    @PostMapping("/admin/saveUser")
+    public boolean getUser(@RequestBody User user) {
+        db.save(user);
+        return true;
+    }
 }
