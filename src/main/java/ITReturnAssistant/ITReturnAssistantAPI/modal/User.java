@@ -4,6 +4,7 @@ import java.util.List;
 
 public class User {
     private String id;
+    private String password;
     private String email;
     private String name;
     private String pan;
@@ -47,5 +48,13 @@ public class User {
 
     public void setUserDeclaration(List<UserDeclaration> userDeclaration) {
         this.userDeclaration = userDeclaration;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

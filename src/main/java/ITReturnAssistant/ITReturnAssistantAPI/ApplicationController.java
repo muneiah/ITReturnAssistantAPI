@@ -23,7 +23,13 @@ public class ApplicationController {
 
     @GetMapping("/getUser/{id}")
     public User getUser(@RequestParam(value="id") String id, @RequestBody String password) {
-        return db.findOne(new Query(Criteria.where("id").is(id).and("password").is(password)), User.class);
+        User user = db.findOne(new Query(Criteria.where("id").is(id)), User.class);
+        if (user == null) {
+            user = new User();
+            user.setId(id);
+            user.setPassword(password);
+        }
+        return user;
     }
 
     @PostMapping("/saveUser")
